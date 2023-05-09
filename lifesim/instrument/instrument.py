@@ -741,7 +741,7 @@ class Instrument(InstrumentModule):
         noise = (noise_bg[:, np.newaxis] + noise_planet)
 
         if (extraction_mode == True):
-            noise = noise / 4
+            noise = noise / 2
 
         # draw noise
         noise_drawn = np.random.poisson(lam=noise) - np.random.poisson(lam=noise)
