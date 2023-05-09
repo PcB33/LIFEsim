@@ -591,7 +591,8 @@ class Instrument(InstrumentModule):
                    angsep: float,  # in arcsec
                    flux_planet_spectrum: list,  # in ph m-3 s-1 over m
                    integration_time: float,  # in s
-                   phi_n: int = 360):
+                   phi_n: int = 360,
+                   extraction_mode = False):
         """
         Calculate the signal-to-noise ratio per spectral bin of a given spectrum of a single
         planet.
@@ -738,6 +739,9 @@ class Instrument(InstrumentModule):
         noise_bg = (noise_bg_star + noise_bg_universe) * integration_time / phi_n * self.data.inst['eff_tot'] * 2
 
         noise = (noise_bg[:, np.newaxis] + noise_planet)
+
+        if (extraction_mode == True):
+            noise = noise / 4
 
         # draw noise
         noise_drawn = np.random.poisson(lam=noise) - np.random.poisson(lam=noise)
